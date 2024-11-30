@@ -130,7 +130,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
                             $query = $db->query("SELECT * FROM terms");
                             $terms = $query->fetchAll();
 
-                            $query = $db->query("SELECT * FROM sosyal_guvence");
+                            $query = $db->query("SELECT * FROM social_security");
                             $sosyals = $query->fetchAll();
                             //print_r($department);
 

@@ -208,7 +208,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <?php
                                             $query=$db->query(" SELECT users.id,users.ad,users.soyad,users.email,bolumler.bolum_ad,titles.unvan_ad from advisor_details
 INNER JOIN users ON users.id=advisor_details.danisman_id
-INNER JOIN titles ON titles.id=advisor_details.unvan_id
+INNER JOIN titles ON titles.id=advisor_details.title_id
 INNER JOIN department ON bolumler.id=advisor_details.bolum_id");
                                             $danismanlar = $query->fetchAll(PDO::FETCH_ASSOC);
 

@@ -37,7 +37,7 @@ if (isset($_POST)){
     if ($kaydet){
         $id = $db->lastInsertId();
 
-        $query=$db->prepare("INSERT INTO advisor_details (unvan_id,danisman_id,bolum_id) VALUES (:value1,:value2,:value3)");
+        $query=$db->prepare("INSERT INTO advisor_details (title_id,danisman_id,bolum_id) VALUES (:value1,:value2,:value3)");
         $query->execute([
             "value1"=>$unvan,
             "value2"=>$id,

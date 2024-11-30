@@ -48,7 +48,7 @@ INSERT INTO `department` (`id`, `bolum_ad`) VALUES
 
 CREATE TABLE `advisor_details` (
   `id` int(11) NOT NULL,
-  `unvan_id` int(11) NOT NULL,
+  `title_id` int(11) NOT NULL,
   `danisman_id` int(11) NOT NULL,
   `bolum_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -57,7 +57,7 @@ CREATE TABLE `advisor_details` (
 -- Dumping data for table `advisor_details`
 --
 
-INSERT INTO `advisor_details` (`id`, `unvan_id`, `danisman_id`, `bolum_id`) VALUES
+INSERT INTO `advisor_details` (`id`, `title_id`, `danisman_id`, `bolum_id`) VALUES
 (26, 2, 43, 7),
 (29, 1, 48, 9),
 (30, 1, 52, 7);
@@ -154,19 +154,19 @@ INSERT INTO `roller` (`id`, `role_ad`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sosyal_guvence`
+-- Table structure for table `social_security`
 --
 
-CREATE TABLE `sosyal_guvence` (
+CREATE TABLE `social_security` (
   `id` int(11) NOT NULL,
   `ad` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `sosyal_guvence`
+-- Dumping data for table `social_security`
 --
 
-INSERT INTO `sosyal_guvence` (`id`, `ad`) VALUES
+INSERT INTO `social_security` (`id`, `ad`) VALUES
 (1, 'BAĞKUR’dan sağlık hizmeti alıyor'),
 (2, 'SGK’dan sağlık hizmeti alıyor\r\n'),
 (3, 'EMEKLİ SANDIĞI’ndan sağlık hizmeti alıyor'),
@@ -269,7 +269,7 @@ ALTER TABLE `advisor_details`
   ADD PRIMARY KEY (`id`),
   ADD KEY `advisor_details_ibfk_1` (`bolum_id`),
   ADD KEY `advisor_details_ibfk_2` (`danisman_id`),
-  ADD KEY `advisor_details_ibfk_3` (`unvan_id`);
+  ADD KEY `advisor_details_ibfk_3` (`title_id`);
 
 --
 -- Indexes for table `terms`
@@ -298,9 +298,9 @@ ALTER TABLE `roller`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sosyal_guvence`
+-- Indexes for table `social_security`
 --
-ALTER TABLE `sosyal_guvence`
+ALTER TABLE `social_security`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -362,9 +362,9 @@ ALTER TABLE `roller`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `sosyal_guvence`
+-- AUTO_INCREMENT for table `social_security`
 --
-ALTER TABLE `sosyal_guvence`
+ALTER TABLE `social_security`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
@@ -395,7 +395,7 @@ ALTER TABLE `titles`
 ALTER TABLE `advisor_details`
   ADD CONSTRAINT `advisor_details_ibfk_1` FOREIGN KEY (`bolum_id`) REFERENCES `department` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `advisor_details_ibfk_2` FOREIGN KEY (`danisman_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `advisor_details_ibfk_3` FOREIGN KEY (`unvan_id`) REFERENCES `titles` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `advisor_details_ibfk_3` FOREIGN KEY (`title_id`) REFERENCES `titles` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`

@@ -120,7 +120,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
 INNER JOIN users ON users.id=Internship_Registration.ogrenci_id
 INNER JOIN student_details ON student_details.ogrenci_id=Internship_Registration.ogrenci_id
 INNER JOIN Internship_date ON Internship_date.id=Internship_Registration.Internship_date_id
-INNER JOIN sosyal_guvence ON sosyal_guvence.id=Internship_Registration.sigorta
+INNER JOIN social_security ON social_security.id=Internship_Registration.sigorta
 INNER JOIN terms ON Internship_date.donem_id=terms.id WHERE users.id =:id");
                             $query->execute([
                                     "id"=>$_SESSION["kullanici"]["id"]

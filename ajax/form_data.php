@@ -41,7 +41,7 @@ if (isset($_POST["Internship_date_id"])){
 if (isset($_POST["bolum_id"])){
     $bolum_id= $_POST["bolum_id"];
 
-    $query=$db->prepare("SELECT concat(titles.unvan_ad,\" \",users.ad,\" \",users.soyad) as ad_soyad,users.id FROM advisor_details INNER JOIN users ON advisor_details.danisman_id=users.id INNER JOIN titles ON titles.id=advisor_details.unvan_id  WHERE bolum_id=:id");
+    $query=$db->prepare("SELECT concat(titles.unvan_ad,\" \",users.ad,\" \",users.soyad) as ad_soyad,users.id FROM advisor_details INNER JOIN users ON advisor_details.danisman_id=users.id INNER JOIN titles ON titles.id=advisor_details.title_id  WHERE bolum_id=:id");
 
     $query->execute([
         "id"=>$bolum_id
