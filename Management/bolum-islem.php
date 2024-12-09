@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "manager"){ ?>
 
 
 <!DOCTYPE html>
@@ -89,14 +89,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Danışman İşlemleri</h1>
+                            <h1 class="m-0">Department Operations</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <button type="button" class="btn btn-info mr-3" data-toggle="modal" data-target="#unvan_ekle">
-                                    Ünvan Ekle / Çıkar
-                                </button>
-
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">
                                     Ekle
                                 </button>
@@ -111,69 +107,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Danışman Ekle</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="../ajax/danisman_kayit.php" method="post" id="danisman_kaydet">
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Ad:</label>
-                                        <input type="text" name="ad" class="form-control" id="inputEmail4" placeholder="Ad">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Soyad:</label>
-                                        <input type="text" name="soyad" class="form-control" id="inputPassword4" placeholder="Soyad">
-                                    </div>
-                                </div>
+                            <form action="../ajax/bolum_kayit.php" method="post" id="personel_kaydet">
+                              
                                 <div class="form-group">
-                                    <label for="inputAddress">E-Posta Adresi:</label>
-                                    <input type="email" name="email" class="form-control" id="inputAddress" placeholder="xxxxx@comu.edu.com.tr">
+                                    <label for="inputAddress">Department Name:</label>
+                                    <input type="text" name="bolum_ad" class="form-control" id="inputAddress" placeholder="Section adı giriniz">
                                 </div>
-
-
-                                <?php
-
-
-                                    $query=$db->prepare("SELECT * FROM bolumler");
-                                    $query->execute();
-                                    $department = $query->fetchAll(PDO::FETCH_ASSOC);
-
-
-                                    $query=$db->prepare("SELECT * FROM titles");
-                                    $query->execute();
-                                    $titles = $query->fetchAll(PDO::FETCH_ASSOC);
-
-                                ?>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputCity">Section:</label>
-                                        <select id="inputCity" name="bolum" class="form-control">
-                                            <?php foreach ($bolumler as $bolum): ?>
-                                                <option value="<?php echo $bolum["id"] ?>"><?php echo $bolum["bolum_ad"]; ?></option>
-                                            <?php endforeach;?>
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputState">Ünvan:</label>
-                                        <select id="inputState" name="unvan" class="form-control">
-
-                                            <?php foreach ($titles as $unvan): ?>
-                                                <option value="<?php echo $unvan["id"]; ?>"><?php echo $unvan["unvan_ad"]; ?></option>
-                                            <?php endforeach;?>
-                                        </select>
-                                    </div>
-
-                                </div>
-
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                            <button type="button" class="btn btn-primary" id="kaydet">Kaydet</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="kaydet">Save</button>
                         </div>
                     </div>
                 </div>
@@ -197,32 +147,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <thead>
                                                 <tr>
                                                     <th>id</th>
-                                                    <th>Ünvan</th>
-                                                    <th>Name Surname</th>
-                                                    <th>Section</th>
-                                                    <th>E-Posta</th>
-                                                    <th>Transactions</th>
+                                                    <th>Department Name</th>
+                                                    <th>Operations</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php
-                                            $query=$db->query(" SELECT users.id,users.ad,users.soyad,users.email,bolumler.bolum_ad,titles.unvan_ad from advisor_details
-INNER JOIN users ON users.id=advisor_details.danisman_id
-INNER JOIN titles ON titles.id=advisor_details.title_id
-INNER JOIN department ON bolumler.id=advisor_details.bolum_id");
-                                            $danismanlar = $query->fetchAll(PDO::FETCH_ASSOC);
-
+                                            $query=$db->query("SELECT * FROM department");
+                                            $department = $query->fetchAll(PDO::FETCH_ASSOC);
                                             ?>
 
-                                            <?php foreach ($danismanlar as $danisman): ?>
+                                            <?php foreach ($department as $bolum): ?>
                                                 <tr>
-                                                    <td><?php echo $danisman["id"]; ?></td>
-                                                    <td><?php echo $danisman["unvan_ad"]; ?></td>
-                                                    <td><?php echo $danisman["ad"]." ".$danisman["soyad"]; ?></td>
-                                                    <td><?php echo $danisman["bolum_ad"] ?></td>
-                                                    <td><?php echo $danisman["email"]; ?></td>
+                                                    <td><?php echo $bolum["id"]; ?></td>
+                                                    <td><?php echo $bolum["bolum_ad"];?></td>
                                                     <td>
-                                                        <a class="btn btn-danger" href="<?php echo "../ajax/danisman_sil.php?id=".$danisman["id"]; ?>">Sil</a>
+                                                        <a class="btn btn-danger" href="<?php echo "../ajax/bolum_sil.php?id=".$bolum["id"]; ?>">Sil</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -244,53 +185,61 @@ INNER JOIN department ON bolumler.id=advisor_details.bolum_id");
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        <div class="modal fade" id="unvan_ekle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+        <div class="modal fade" id="duzenle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Title Transactions</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Danışman Düzenleme</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body model-lg">
-                        <form action="../ajax/unvan_kayit.php" method="post" id="unvan_form">
-
+                    <div class="modal-body">
+                        <form action="../ajax/danisman_duzenle.php" method="post" id="danisman_duzenle">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Ad:</label>
+                                    <input type="text" name="ad" class="form-control" id="inputEmail4" placeholder="Ad">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Soyad:</label>
+                                    <input type="text" name="soyad" class="form-control" id="inputPassword4" placeholder="Soyad">
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label for="inputAddress">Enter Title Name:</label>
-                                <input type="text" name="unvan_ad" class="form-control" id="inputAddress" placeholder="Ünvan giriniz...">
+                                <label for="inputAddress">E-Posta Adresi:</label>
+                                <input type="email" name="email" class="form-control" id="inputAddress" placeholder="xxxxx@comu.edu.com.tr">
                             </div>
 
 
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCity">Section:</label>
+                                    <select id="inputCity" name="bolum" class="form-control">
+                                        <?php foreach ($department as $bolum): ?>
+                                            <option value="<?php echo $bolum["id"] ?>"><?php echo $bolum["bolum_ad"]; ?></option>
+                                        <?php endforeach;?>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Ünvan:</label>
+                                    <select id="inputState" name="unvan" class="form-control">
+
+                                        <?php foreach ($titles as $unvan): ?>
+                                            <option value="<?php echo $unvan["id"]; ?>"><?php echo $unvan["unvan_ad"]; ?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+
+                            </div>
+
                         </form>
-                        <table class="table table-bordered">
-                             <thead>
-                                <tr>
-                                    <th scope="col">Ünvan Adı:</th>
-                                    <th scope="col">İşlem:</th>
-                                </tr>
-                             </thead>
-                             <tbody>
-                             <?php
-                             $titles=$db->query("SELECT * FROM titles");
-                             ?>
-                             <?php foreach ($titles as $unvan): ?>
-                                <tr>
-                                    <td><?= $unvan["unvan_ad"] ?></td>
-                                    <td>
-                                        <a href="<?php echo "../ajax/unvan_sil.php?id=".$unvan["id"]; ?>" class="btn btn-danger">Sil</a>
-                                    </td>
-                                </tr>
-                             <?php endforeach; ?>
-
-                             </tbody>
-
-
-                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
-                        <button type="submit" id="unvan_btn" class="btn btn-primary">Kaydet</button>
+                        <button type="button" class="btn btn-primary">Değişiklikleri Kaydet</button>
                     </div>
                 </div>
             </div>
@@ -352,7 +301,7 @@ INNER JOIN department ON bolumler.id=advisor_details.bolum_id");
                 },
                 columnDefs: [
                     {targets:[0],visible:false},
-                    {targets:[5],searchable:false}
+                    {targets:[2],searchable:false}
                 ],
                 autoWidth: false,
                 buttons: [{
@@ -380,13 +329,9 @@ INNER JOIN department ON bolumler.id=advisor_details.bolum_id");
             });
         });
 
-        $("#unvan_btn").click(function () {
-            $("#unvan_form").submit();
-        });
-
         $("#kaydet").click(function () {
-            $("#danisman_kaydet").submit();
-        });
+            $("#personel_kaydet").submit();
+        })
     </script>
 
 

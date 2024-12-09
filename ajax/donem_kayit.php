@@ -13,7 +13,7 @@ if(isset($_POST["donem_tarih"])){
         "bad" => $donem_tarih,
     ]);
 
-    header("Location:../yönetim/staj-tarih-islem.php");
+    header("Location:../Management/staj-tarih-islem.php");
 
 
 }

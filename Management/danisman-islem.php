@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "manager"){ ?>
 
 
 <!DOCTYPE html>
@@ -28,9 +28,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
-
-
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -92,15 +89,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Staj Dönemi ve Tarih  İşlemleri</h1>
+                            <h1 class="m-0">Consultant Procedures</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <button type="button" class="btn btn-info mr-3" data-toggle="modal" data-target="#donem_ekle">
-                                    Dönem Ekle / Çıkar
+                                <button type="button" class="btn btn-info mr-3" data-toggle="modal" data-target="#unvan_ekle">
+                                    Add / Remove Title
                                 </button>
+
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">
-                                    Ekle
+                                    Add
                                 </button>
                             </ol>
                         </div><!-- /.col -->
@@ -113,45 +111,64 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Staj Tarihi Ekle</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Danışman Ekle</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form action="../ajax/Internship_date_kayit.php" method="post" id="personel_kaydet">
-
-                                  <div class="form-group">
-                                      <label for="inputAddress">Dönem Yılı:</label>
-                                      <?php
-                                        $datalar = $db->query("SELECT * FROM terms")->fetchAll();
-                                      ?>
-                                      <select id="inputState" name="donem_id" class="form-control">
-                                      <?php foreach ($datalar as $data): ?>
-                                          <option value="<?= $data["id"]; ?>"><?= $data["donem_yil"]; ?></option>
-                                    <?php endforeach; ?>
-                                      </select>
-                                  </div>
-
-                                <div class="form-group">
-                                    <label for="inputAddress">Staj Yapılacak Haftalık Gün Sayısı:</label>
-                                    <select id="inputState" name="gun" class="form-control">
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
-                                </div>
-
-
+                            <form action="../ajax/danisman_kayit.php" method="post" id="danisman_kaydet">
                                 <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Staj Giriş Tarihi:</label>
-                                    <input type="date" name="staj_giris" class="form-control" id="inputEmail4">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Ad:</label>
+                                        <input type="text" name="ad" class="form-control" id="inputEmail4" placeholder="Ad">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Soyad:</label>
+                                        <input type="text" name="soyad" class="form-control" id="inputPassword4" placeholder="Soyad">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Staj Bitiş Tarihi:</label>
-                                    <input type="date" name="staj_bitis" class="form-control" id="inputPassword4">
+                                <div class="form-group">
+                                    <label for="inputAddress">E-Posta Adresi:</label>
+                                    <input type="email" name="email" class="form-control" id="inputAddress" placeholder="xxxxx@comu.edu.com.tr">
                                 </div>
-                            </div>
+
+
+                                <?php
+
+
+                                    $query=$db->prepare("SELECT * FROM bolumler");
+                                    $query->execute();
+                                    $department = $query->fetchAll(PDO::FETCH_ASSOC);
+
+
+                                    $query=$db->prepare("SELECT * FROM titles");
+                                    $query->execute();
+                                    $titles = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                                ?>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputCity">Section:</label>
+                                        <select id="inputCity" name="bolum" class="form-control">
+                                            <?php foreach ($bolumler as $bolum): ?>
+                                                <option value="<?php echo $bolum["id"] ?>"><?php echo $bolum["bolum_ad"]; ?></option>
+                                            <?php endforeach;?>
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputState">Ünvan:</label>
+                                        <select id="inputState" name="unvan" class="form-control">
+
+                                            <?php foreach ($titles as $unvan): ?>
+                                                <option value="<?php echo $unvan["id"]; ?>"><?php echo $unvan["unvan_ad"]; ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+
+                                </div>
+
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -180,30 +197,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <thead>
                                                 <tr>
                                                     <th>id</th>
-                                                    <th>Dönem</th>
-                                                    <th>Haftalık Staj Gün Sayısı</th>
-                                                    <th>Staj Giriş Tarihi</th>
-                                                    <th>Staj Bitiş Tarihi</th>
+                                                    <th>Ünvan</th>
+                                                    <th>Name Surname</th>
+                                                    <th>Section</th>
+                                                    <th>E-Posta</th>
                                                     <th>Transactions</th>
-                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php
-                                            $query=$db->query("SELECT Internship_date.id,staj_bitis,staj_baslangic,haftalik_gun_sayi,donem_yil FROM Internship_date INNER JOIN terms ON Internship_date.donem_id=terms.id;
-");
-                                            $Internship_dateler = $query->fetchAll(PDO::FETCH_ASSOC);
+                                            $query=$db->query(" SELECT users.id,users.ad,users.soyad,users.email,bolumler.bolum_ad,titles.unvan_ad from advisor_details
+INNER JOIN users ON users.id=advisor_details.danisman_id
+INNER JOIN titles ON titles.id=advisor_details.title_id
+INNER JOIN department ON bolumler.id=advisor_details.bolum_id");
+                                            $danismanlar = $query->fetchAll(PDO::FETCH_ASSOC);
+
                                             ?>
 
-                                            <?php foreach ($Internship_dateler as $Internship_date): ?>
+                                            <?php foreach ($danismanlar as $danisman): ?>
                                                 <tr>
-                                                    <td><?php echo $Internship_date["id"]; ?></td>
-                                                    <td><?php echo $Internship_date["donem_yil"]; ?></td>
-                                                    <td><?php echo $Internship_date["haftalik_gun_sayi"];?></td>
-                                                    <td><?php echo $Internship_date["staj_baslangic"];?></td>
-                                                    <td><?php echo $Internship_date["staj_bitis"];?></td>
+                                                    <td><?php echo $danisman["id"]; ?></td>
+                                                    <td><?php echo $danisman["unvan_ad"]; ?></td>
+                                                    <td><?php echo $danisman["ad"]." ".$danisman["soyad"]; ?></td>
+                                                    <td><?php echo $danisman["bolum_ad"] ?></td>
+                                                    <td><?php echo $danisman["email"]; ?></td>
                                                     <td>
-                                                        <a class="btn btn-danger" href="<?php echo "../ajax/Internship_date_sil.php?id=".$Internship_date["id"]; ?>">Sil</a>
+                                                        <a class="btn btn-danger" href="<?php echo "../ajax/danisman_sil.php?id=".$danisman["id"]; ?>">Sil</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -225,51 +244,53 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        <div class="modal fade" id="donem_ekle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade" id="unvan_ekle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Dönem İşlemleri</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Title Transactions</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="../ajax/donem_kayit.php" method="post" id="donem_form">
+                    <div class="modal-body model-lg">
+                        <form action="../ajax/unvan_kayit.php" method="post" id="unvan_form">
 
                             <div class="form-group">
-                                <label for="inputPassword4">Yeni Dönem Ekle:</label>
-                                <input type="text" name="donem_tarih" class="form-control" id="datepicker">
+                                <label for="inputAddress">Enter Title Name:</label>
+                                <input type="text" name="unvan_ad" class="form-control" id="inputAddress" placeholder="Ünvan giriniz...">
                             </div>
 
+
                         </form>
-
                         <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th scope="col">Dönem Yılı:</th>
-                                <th scope="col">İşlem:</th>
+                             <thead>
+                                <tr>
+                                    <th scope="col">Ünvan Adı:</th>
+                                    <th scope="col">İşlem:</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                             <?php
+                             $titles=$db->query("SELECT * FROM titles");
+                             ?>
+                             <?php foreach ($titles as $unvan): ?>
+                                <tr>
+                                    <td><?= $unvan["unvan_ad"] ?></td>
+                                    <td>
+                                        <a href="<?php echo "../ajax/unvan_sil.php?id=".$unvan["id"]; ?>" class="btn btn-danger">Sil</a>
+                                    </td>
+                                </tr>
+                             <?php endforeach; ?>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                                $terms=$db->query("SELECT * FROM terms");
-                            ?>
-                            <?php foreach ($terms as $donem): ?>
-                            <tr>
-                                <td><?=  $donem["donem_yil"]; ?></td>
-                                <td>
-                                    <a href="<?php echo "../ajax/donem_sil.php?id=".$donem["id"]; ?>" class="btn btn-danger">Sil</a>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                            </tbody>
+                             </tbody>
+
+
                         </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
-                        <button type="button" id="kaydet_donem" class="btn btn-primary">Kaydet</button>
+                        <button type="submit" id="unvan_btn" class="btn btn-primary">Kaydet</button>
                     </div>
                 </div>
             </div>
@@ -319,7 +340,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
 
@@ -332,7 +352,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 columnDefs: [
                     {targets:[0],visible:false},
-                    {targets:[4],searchable:false}
+                    {targets:[5],searchable:false}
                 ],
                 autoWidth: false,
                 buttons: [{
@@ -360,24 +380,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             });
         });
 
+        $("#unvan_btn").click(function () {
+            $("#unvan_form").submit();
+        });
+
         $("#kaydet").click(function () {
-            $("#personel_kaydet").submit();
+            $("#danisman_kaydet").submit();
         });
-        $("#kaydet_donem").click(function () {
-            $("#donem_form").submit();
-        });
-
-
-
-        $(document).ready(function(){
-            $("#datepicker").datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years",
-                autoclose:true
-            });
-        })
-
     </script>
 
 

@@ -18,15 +18,15 @@ if (isset($_POST)){
     $ad=$_POST["ad"];
     $soyad=$_POST["soyad"];
     $email=$_POST["email"];
-    $sifre=md5($pwd);
+    $Password=md5($pwd);
     $rol_id=2;
 
-    $query=$db->prepare("INSERT INTO users  (ad,soyad,email,sifreHash,rol_id) VALUES (:value1,:value2,:value3,:value4,:value5)");
+    $query=$db->prepare("INSERT INTO users  (ad,soyad,email,PasswordHash,rol_id) VALUES (:value1,:value2,:value3,:value4,:value5)");
     $kaydet=$query->execute([
         "value1" => $ad,
         "value2" => $soyad,
         "value3" => $email,
-        "value4" => $sifre,
+        "value4" => $Password,
         "value5" => $rol_id,
     ]);
 
@@ -76,7 +76,7 @@ if (isset($_POST)){
         $mail->send();
 
 
-        header("Location:../yönetim/danisman-islem.php");
+        header("Location:../Management/danisman-islem.php");
 
     } catch (Exception $e) {
         echo "E-Posta Hata Mesajı: {$mail->ErrorInfo}";

@@ -1,36 +1,36 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "manager"){ ?>
 
 
-    <!DOCTYPE html>
-    <!--
-    This is a starter template page. Use this page to start your new project from
-    scratch. This page gets rid of all links and provides the needed markup only.
-    -->
-    <html lang="tr">
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="tr">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Manager |  Internship Tracking</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yönetici | ÇÖMÜ STAJ TAKİP</title>
 
-        <!-- Google Font: Source Sans Pro -->
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-        <!-- Font Awesome Icons -->
-        <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-        <script src="https://kit.fontawesome.com/1f952dc3e7.js" crossorigin="anonymous"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+    <script src="https://kit.fontawesome.com/1f952dc3e7.js" crossorigin="anonymous"></script>
 
-        <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-    </head>
+    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
 
-    <body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -63,17 +63,17 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Log out</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Çıkış Yap</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                    Are you sure you want to log out?
+                        Çıkış yapmak istediğinize emin misiniz ?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <a href="../cikis.php" type="button" class="btn btn-danger">Exit</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+                        <a href="../cikis.php" type="button" class="btn btn-danger">Çıkış</a>
                     </div>
                 </div>
             </div>
@@ -89,20 +89,54 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Staj Onay İşlemi</h1>
+                            <h1 class="m-0">Personel İşlemleri</h1>
                         </div><!-- /.col -->
-<!--                        <div class="col-sm-6">-->
-<!--                            <ol class="breadcrumb float-sm-right">-->
-<!--                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">-->
-<!--                                    Ekle-->
-<!--                                </button>-->
-<!--                            </ol>-->
-<!--                        </div>/.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">
+                                    Add
+                                </button>
+                            </ol>
+                        </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
 
+            <div class="modal fade" id="ekle_danisman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Danışman Ekle</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="../ajax/personel_kayit.php" method="post" id="personel_kaydet">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Ad:</label>
+                                        <input type="text" name="ad" class="form-control" id="inputEmail4" placeholder="Ad">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword4">Soyad:</label>
+                                        <input type="text" name="soyad" class="form-control" id="inputPassword4" placeholder="Soyad">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress">E-mail Address:</label>
+                                    <input type="email" name="email" class="form-control" id="inputAddress" placeholder="xxxxx@comu.edu.com.tr">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                            <button type="button" class="btn btn-primary" id="kaydet">Kaydet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <!-- Main content -->
@@ -117,41 +151,29 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table id="example1"
-                                               class="table table-bordered table-striped dataTable dtr-inline"
-                                               aria-describedby="example1_info">
+                                            class="table table-bordered table-striped dataTable dtr-inline"
+                                            aria-describedby="example1_info">
                                             <thead>
-                                            <tr>
-                                                <th>id</th>
-                                                <th>Full Name</th>
-                                                <th>Student Number</th>
-                                                <th>Student Email</th>
-                                                <th>Telephone Number</th>
-                                                <th>Transactions</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>id</th>
+                                                    <th>Full Name</th>
+                                                    <th>E-Mail</th>
+                                                    <th>Transactions</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                             <?php
-
-
-                                            $query=$db->query("SELECT internship_registration.id as kayit_id,ad,soyad,ogrenci_no,tel,email,users.id as k_id  FROM internship_registration
-INNER JOIN student_details ON internship_registration.ogrenci_id=student_details.ogrenci_id
-INNER JOIN users ON internship_registration.ogrenci_id=users.id
-WHERE internship_registration.mudur_onay=0 AND internship_registration.danisman_onay=1");
-
+                                            $query=$db->query("SELECT users.id,ad,soyad,email FROM users INNER JOIN roles ON roles.id=users.rol_id  WHERE users.rol_id=3");
                                             $Staff = $query->fetchAll(PDO::FETCH_ASSOC);
-                                            //print_r($Staff);
                                             ?>
 
                                             <?php foreach ($Staff as $personel): ?>
                                                 <tr>
-                                                    <td><?php echo $personel["kayit_id"]; ?></td>
+                                                    <td><?php echo $personel["id"]; ?></td>
                                                     <td><?php echo $personel["ad"]." ".$personel["soyad"]; ?></td>
-                                                    <td><?php echo $personel["ogrenci_no"] ?></td>
-                                                    <td><?php echo $personel["email"] ?></td>
-                                                    <td><?php echo $personel["tel"]; ?></td>
+                                                    <td><?php echo $personel["email"]; ?></td>
                                                     <td>
-                                                        <a class="btn btn-info" href="<?php echo "../ogrenci/pdf/index.php?id=".$personel["k_id"]; ?>">Show Details</a>
-                                                        <a class="btn btn-success" href="<?php echo "../ajax/staj_onay.php?mudur_onay_id=".$personel["kayit_id"]; ?>">Onayla</a>
+                                                        <a class="btn btn-danger" href="<?php echo "../ajax/personel_sil.php?id=".$personel["id"]; ?>">Delete</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -177,7 +199,7 @@ WHERE internship_registration.mudur_onay=0 AND internship_registration.danisman_
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Danışman Düzenleme</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Consultant Editing</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -195,7 +217,7 @@ WHERE internship_registration.mudur_onay=0 AND internship_registration.danisman_
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress">E-Posta Adresi:</label>
+                                <label for="inputAddress">E-mail Address:</label>
                                 <input type="email" name="email" class="form-control" id="inputAddress" placeholder="xxxxx@comu.edu.com.tr">
                             </div>
 
@@ -280,11 +302,10 @@ WHERE internship_registration.mudur_onay=0 AND internship_registration.danisman_
 
     <script>
 
-
         $(document).ready(function () {
             var table = $('#example1').DataTable({
                 responsive: true,
-                lengthChange: true,
+                lengthChange: false,
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/tr.json"
                 },
@@ -293,11 +314,26 @@ WHERE internship_registration.mudur_onay=0 AND internship_registration.danisman_
                     {targets:[3],searchable:false}
                 ],
                 autoWidth: false,
-
+                buttons: [{
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },   {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },  {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                }, "colvis"],
 
                 initComplete: function () {
                     setTimeout(function () {
-                        //table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                        table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
                     }, 10);
                 }
             });
@@ -305,28 +341,13 @@ WHERE internship_registration.mudur_onay=0 AND internship_registration.danisman_
 
         $("#kaydet").click(function () {
             $("#personel_kaydet").submit();
-
-        });
-        $("#bolum").change(function () {
-            let bolum_id = $(this).val();
-            $.ajax({
-                type : 'POST',
-                url : '../ajax/form_data.php',
-                data:{
-                    bolum_id:bolum_id
-                },
-                success:function(data) {
-                    $("#danisman").html(data);
-                    console.log(data);
-                }
-            })
-        });
+        })
     </script>
 
 
-    </body>
+</body>
 
-    </html>
+</html>
 
 <?php }else{
     header("Location:../index.php");

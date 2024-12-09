@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "manager"){ ?>
 
 <!DOCTYPE html>
 <!--

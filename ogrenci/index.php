@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "öğrenci"){ ?>
 
     <!DOCTYPE html>
     <!--
@@ -103,7 +103,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
                          require "../config.php";
                         $query = $db->prepare ("SELECT * fROM Internship_Registration WHERE ogrenci_id=:id");
                         $query->execute([
-                                "id" => $_SESSION["kullanici"]["id"],
+                                "id" => $_SESSION["users"]["id"],
                         ]);
 
                         $data = $query->fetch();
@@ -137,7 +137,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
 
                             ?>
 
-                            <input type="hidden" name="id" value="<?= $_SESSION["kullanici"]["id"] ?>">
+                            <input type="hidden" name="id" value="<?= $_SESSION["users"]["id"] ?>">
 
                             <div class="col-md-6 mb-3">
                                 <label for="inputEmail4" class="form-label">Tc Kimlik No</label>
@@ -171,8 +171,8 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label for="inputPassword4" class="form-label">Staja Başlama Tarihi</label>
-                                <select  id="baslangic" name="Internship_date" class="form-select form-control">
+                                <label for="inputPassword4" class="form-label">Internship Start Date</label>
+                                <select  id="baslangic" name="internship_date" class="form-select form-control">
                                     <option value="err">Başlangıç Tarihi Seçiniz</option>
                                 </select>
                             </div>
@@ -299,7 +299,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
                 type : 'POST',
                 url : '../ajax/form_data.php',
                 data:{
-                    Internship_date_id:id
+                    internship_date_id:id
                 },
                 success:function(data) {
                     $("#bitis").html(data);

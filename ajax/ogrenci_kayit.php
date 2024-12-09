@@ -17,7 +17,7 @@ if (isset($_POST)){
 
     $ad=$_POST["ad"];
     $soyad=$_POST["soyad"];
-    $sifre=md5($pwd);
+    $Password=md5($pwd);
     $no=$_POST["no"];
 
     $bolum=$_POST["bolum"];
@@ -28,12 +28,12 @@ if (isset($_POST)){
 
     $rol_id=4;
 
-    $query=$db->prepare("INSERT INTO users  (ad,soyad,email,sifreHash,rol_id) VALUES (:value1,:value2,:value3,:value4,:value5)");
+    $query=$db->prepare("INSERT INTO users  (ad,soyad,email,PasswordHash,rol_id) VALUES (:value1,:value2,:value3,:value4,:value5)");
     $kaydet=$query->execute([
         "value1" => $ad,
         "value2" => $soyad,
         "value3" => $email,
-        "value4" => $sifre,
+        "value4" => $Password,
         "value5" => $rol_id,
     ]);
 
@@ -83,7 +83,7 @@ if (isset($_POST)){
         $mail->send();
 
 
-        header("Location:../yönetim/ogrenci-islem.php");
+        header("Location:../Management/ogrenci-islem.php");
 
     } catch (Exception $e) {
         echo "E-Posta Hata Mesajı: {$mail->ErrorInfo}";

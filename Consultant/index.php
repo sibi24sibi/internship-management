@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "danışman"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "danışman"){ ?>
 
 <!DOCTYPE html>
 <!--
@@ -109,7 +109,7 @@ INNER JOIN student_details ON internship_registration.ogrenci_id=student_details
 INNER JOIN users ON internship_registration.ogrenci_id=users.id
 WHERE student_details.danisman_id_fk=:danisman_id AND internship_registration.danisman_onay=0");
                     $query->execute([
-                        "danisman_id"=>$_SESSION["kullanici"]["id"]
+                        "danisman_id"=>$_SESSION["users"]["id"]
                     ]);
                     $ogrenci_sayi = $query->rowCount();
                 ?>
@@ -132,7 +132,7 @@ INNER JOIN student_details ON internship_registration.ogrenci_id=student_details
 INNER JOIN users ON internship_registration.ogrenci_id=users.id
 WHERE student_details.danisman_id_fk=:danisman_id AND internship_registration.danisman_onay=1");
               $query->execute([
-                  "danisman_id"=>$_SESSION["kullanici"]["id"]
+                  "danisman_id"=>$_SESSION["users"]["id"]
               ]);
               $danisman_sayi = $query->rowCount();
               ?>

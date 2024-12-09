@@ -14,7 +14,7 @@ if(isset($_POST["unvan_ad"])){
   
     ]);
 
-    header("Location:../yönetim/danisman-islem.php");
+    header("Location:../Management/danisman-islem.php");
 
 
 }

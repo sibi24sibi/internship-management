@@ -91,7 +91,7 @@ CREATE TABLE `users` (
   `ad` varchar(255) NOT NULL,
   `soyad` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `sifreHash` varchar(255) NOT NULL,
+  `PasswordHash` varchar(255) NOT NULL,
   `rol_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -99,7 +99,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `ad`, `soyad`, `email`, `sifreHash`, `rol_id`) VALUES
+INSERT INTO `users` (`id`, `ad`, `soyad`, `email`, `PasswordHash`, `rol_id`) VALUES
 (1, 'Ümit', 'Demir', 'müdür@comu.edu.tr', '304e19039eda30537eb597547b43f2d3', 1),
 (43, 'Yelda', 'Fırat', 'yelda@comu.ogr.edu.tr', '4e6fec3630db86b46933bfef7b8f8d48', 2),
 (44, 'Personel', 'Test', 'personel@comu.edu.tr', '24d5cf4a7c1c01020a4131757f1406f7', 3),
@@ -133,20 +133,20 @@ INSERT INTO `student_details` (`id`, `ogrenci_id`, `danisman_id_fk`, `bolum_id_f
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roller`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `roller` (
+CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `role_ad` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `roller`
+-- Dumping data for table `roles`
 --
 
-INSERT INTO `roller` (`id`, `role_ad`) VALUES
-(1, 'müdür'),
+INSERT INTO `roles` (`id`, `role_ad`) VALUES
+(1, 'manager'),
 (2, 'danışman'),
 (3, 'personel'),
 (4, 'öğrenci');
@@ -292,9 +292,9 @@ ALTER TABLE `student_details`
   ADD KEY `student_details_ibfk_1` (`ogrenci_id`);
 
 --
--- Indexes for table `roller`
+-- Indexes for table `roles`
 --
-ALTER TABLE `roller`
+ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -356,9 +356,9 @@ ALTER TABLE `student_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `roller`
+-- AUTO_INCREMENT for table `roles`
 --
-ALTER TABLE `roller`
+ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
@@ -401,7 +401,7 @@ ALTER TABLE `advisor_details`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `roller` (`id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`);
 
 --
 -- Constraints for table `student_details`

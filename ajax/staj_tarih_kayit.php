@@ -19,7 +19,7 @@ if(isset($_POST["gun"])){
         "tcikis" => $staj_bitis,
     ]);
 
-    header("Location:../yönetim/staj-tarih-islem.php");
+    header("Location:../Management/staj-tarih-islem.php");
 
 
 }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "personel"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "personel"){ ?>
 
 
     <!DOCTYPE html>
@@ -63,7 +63,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "personel"){ ?>
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Çıkış Yap</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Log Out</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -72,8 +72,8 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "personel"){ ?>
                         Çıkış yapmak istediğinize emin misiniz ?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
-                        <a href="../cikis.php" type="button" class="btn btn-danger">Çıkış</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a href="../cikis.php" type="button" class="btn btn-danger">Exit</a>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "personel"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "personel"){ ?>
 
 
 <!DOCTYPE html>
@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">
-                                    Ekle
+                                    Add
                                 </button>
                             </ol>
                         </div><!-- /.col -->

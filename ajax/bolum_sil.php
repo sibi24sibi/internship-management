@@ -9,5 +9,5 @@ if (isset($_GET["id"])){
         "kid"=>$id
     ]);
 
-   header("Location:../yönetim/bolum-islem.php");
+   header("Location:../Management/bolum-islem.php");
 }

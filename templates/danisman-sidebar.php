@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../danisman/index.php" class="brand-link">
-        <img src="../dist/img/comu_logo_4.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="../dist/img/the-entrepreneurship-network-cover.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: 1">
         <span class="brand-text font-weight-light">Internship Tracking</span>
     </a>
@@ -15,7 +15,7 @@
             </div>
             <div class="info">
                 <?php
-                    $ad_soyad = $_SESSION["kullanici"]["ad"]." ".$_SESSION["kullanici"]["soyad"];
+                    $ad_soyad = $_SESSION["users"]["ad"]." ".$_SESSION["users"]["soyad"];
                 ?>
                 <a href="#" class="d-block"><?php echo $ad_soyad; ?></a>
             </div>
@@ -44,7 +44,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../danisman/staj-goruntule.php" class="nav-link">
+                            <a href="../Consultant/View_internship.php" class="nav-link">
                                 <i class="fa-solid fa-list"></i>
                                 <p>View Internships </p>
                             </a>

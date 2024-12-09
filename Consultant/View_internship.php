@@ -1,36 +1,36 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "müdür"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "danışman"){ ?>
 
 
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html lang="tr">
+    <!DOCTYPE html>
+    <!--
+    This is a starter template page. Use this page to start your new project from
+    scratch. This page gets rid of all links and provides the needed markup only.
+    -->
+    <html lang="tr">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Yönetici | ÇÖMÜ STAJ TAKİP</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Danışman | ÇÖMÜ STAJ TAKİP</title>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-    <script src="https://kit.fontawesome.com/1f952dc3e7.js" crossorigin="anonymous"></script>
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+        <script src="https://kit.fontawesome.com/1f952dc3e7.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-</head>
+        <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+        <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    </head>
 
-<body class="hold-transition sidebar-mini">
+    <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
 
         <!-- Main Sidebar Container -->
-        <?php include "../templates/yonetim-sidebar.php"?>
+        <?php include "../templates/danisman-sidebar.php"?>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -89,45 +89,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Department Operations</h1>
+                            <h1 class="m-0">Stajları Göster</h1>
                         </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">
-                                    Ekle
-                                </button>
-                            </ol>
-                        </div><!-- /.col -->
+<!--                        <div class="col-sm-6">-->
+<!--                            <ol class="breadcrumb float-sm-right">-->
+<!--                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekle_danisman">-->
+<!--                                    Ekle-->
+<!--                                </button>-->
+<!--                            </ol>-->
+<!--                        </div>/.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
 
-            <div class="modal fade" id="ekle_danisman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Department</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="../ajax/bolum_kayit.php" method="post" id="personel_kaydet">
-                              
-                                <div class="form-group">
-                                    <label for="inputAddress">Department Name:</label>
-                                    <input type="text" name="bolum_ad" class="form-control" id="inputAddress" placeholder="Section adı giriniz">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="kaydet">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <!-- Main content -->
@@ -142,28 +117,58 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table id="example1"
-                                            class="table table-bordered table-striped dataTable dtr-inline"
-                                            aria-describedby="example1_info">
+                                               class="table table-bordered table-striped dataTable dtr-inline"
+                                               aria-describedby="example1_info">
                                             <thead>
-                                                <tr>
-                                                    <th>id</th>
-                                                    <th>Department Name</th>
-                                                    <th>Operations</th>
-                                                    
-                                                </tr>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>Full Name</th>
+                                                <th>Student Number</th>
+                                                <th>Student Email</th>
+                                                <th>Approval</th>
+                                                <th>Telephone Number</th>
+                                                <th>Transactions</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
                                             <?php
-                                            $query=$db->query("SELECT * FROM department");
-                                            $department = $query->fetchAll(PDO::FETCH_ASSOC);
+
+
+                                            $query=$db->prepare("SELECT Internship_Registration.id as kayit_id,ad,soyad,ogrenci_no,tel,email,users.id as k_id,danisman_onay  FROM Internship_Registration
+INNER JOIN student_details ON Internship_Registration.ogrenci_id=student_details.ogrenci_id
+INNER JOIN users ON Internship_Registration.ogrenci_id=users.id
+WHERE student_details.danisman_id_fk=:danisman_id");
+                                            $query->execute([
+                                                    "danisman_id"=>$_SESSION["users"]["id"]
+                                            ]);
+                                            $Staff = $query->fetchAll(PDO::FETCH_ASSOC);
+                                            //print_r($Staff);
                                             ?>
 
-                                            <?php foreach ($department as $bolum): ?>
+                                            <?php foreach ($Staff as $personel): ?>
                                                 <tr>
-                                                    <td><?php echo $bolum["id"]; ?></td>
-                                                    <td><?php echo $bolum["bolum_ad"];?></td>
+                                                    <td><?php echo $personel["kayit_id"]; ?></td>
+                                                    <td><?php echo $personel["ad"]." ".$personel["soyad"]; ?></td>
+                                                    <td><?php echo $personel["ogrenci_no"] ?></td>
+                                                    <td><?php echo $personel["email"] ?></td>
                                                     <td>
-                                                        <a class="btn btn-danger" href="<?php echo "../ajax/bolum_sil.php?id=".$bolum["id"]; ?>">Sil</a>
+
+                                                        <?php if ($personel["danisman_onay"]==1) { ?>
+                                                            <div class="alert-success p-2" role="alert">
+                                                            Confirmed
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="alert-warning p-2 text-white" role="alert">
+                                                                Expected
+                                                            </div>
+                                                        <?php } ?>
+
+
+                                                    </td>
+                                                    <td><?php echo $personel["tel"]; ?></td>
+                                                    <td>
+                                                        <a class="btn btn-info" href="<?php echo "../ogrenci/pdf/index.php?id=".$personel["k_id"]; ?>">Show Details</a>
+
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -292,16 +297,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script>
 
+
         $(document).ready(function () {
             var table = $('#example1').DataTable({
                 responsive: true,
                 lengthChange: false,
+
                 language: {
                     "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/tr.json"
                 },
                 columnDefs: [
                     {targets:[0],visible:false},
-                    {targets:[2],searchable:false}
+                    {targets:[3],searchable:false},
+
                 ],
                 autoWidth: false,
                 buttons: [{
@@ -319,25 +327,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     exportOptions: {
                         columns: ':visible'
                     }
-                }, "colvis"],
+                }, "colvis",
+                    {
+                        extend: 'collection',
+                        text: 'Filter',
+                        buttons: [
+                            {
+                                text: 'Tümü',
+                                action: function ( e, dt, node, config ) {
+                                    location.reload();
+                                }
+                            },
+                            {
+                                text: 'Onaylanan',
+                                action: function ( e, dt, node, config ) {
+                                    table.columns(4).search( "Confirmed" ).draw();
+                                }
+                            },
+                            {
+                                text: 'İşlem Bekleyen',
+                                action: function ( e, dt, node, config ) {
+                                    table.columns(4).search( "Expected" ).draw();
+                                }
+                            }
+                        ],
+                        dropup: true,
+
+                    }],
 
                 initComplete: function () {
                     setTimeout(function () {
                         table.buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
                     }, 10);
                 }
             });
+
+
         });
 
-        $("#kaydet").click(function () {
-            $("#personel_kaydet").submit();
-        })
+
     </script>
 
 
-</body>
+    </body>
 
-</html>
+    </html>
 
 <?php }else{
     header("Location:../index.php");

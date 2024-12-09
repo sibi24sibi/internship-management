@@ -23,7 +23,7 @@ if (isset($_GET["mudur_onay_id"])){
         "kid"=>$id
     ]);
 
-    header("Location:../yönetim/staj-islem.php");
+    header("Location:../Management/staj-islem.php");
 
 
 }

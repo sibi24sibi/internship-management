@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "personel"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "personel"){ ?>
 
 
     <!DOCTYPE html>
@@ -358,19 +358,19 @@ INNER JOIN users ON users.id = internship_registration.ogrenci_id
                     text: 'Filter',
                     buttons: [
                         {
-                            text: 'Tümü',
+                            text: 'All',
                             action: function ( e, dt, node, config ) {
                                 location.reload();
                             }
                         },
                         {
-                            text: 'Sigorta Girişi Tamamlananlar',
+                            text: 'Those with Insurance Entry Completed',
                             action: function ( e, dt, node, config ) {
                                 table.columns(5).search( "Tamamlandı" ).draw();
                             }
                         },
                         {
-                            text: 'Sigorta Girişi Bekleyenler',
+                            text: 'Those Awaiting Insurance Entry',
                             action: function ( e, dt, node, config ) {
                                 table.columns(5).search( "Bekleniyor" ).draw();
                             }

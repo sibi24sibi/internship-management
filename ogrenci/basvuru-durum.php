@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "öğrenci"){ ?>
 
     <!DOCTYPE html>
     <!--
@@ -104,7 +104,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "öğrenci"){ ?>
                         <tr>
 
                             <th scope="col">Full Name</th>
-                            <th scope="col">Müdür Onay </th>
+                            <th scope="col">manager Onay </th>
                             <th scope="col">Danışman Onay </th>
                             <th scope="col">Oluşturulma Tarihi</th>
                             <th scope="col">Transactions</th>
@@ -123,7 +123,7 @@ INNER JOIN Internship_date ON Internship_date.id=Internship_Registration.Interns
 INNER JOIN social_security ON social_security.id=Internship_Registration.sigorta
 INNER JOIN terms ON Internship_date.donem_id=terms.id WHERE users.id =:id");
                             $query->execute([
-                                    "id"=>$_SESSION["kullanici"]["id"]
+                                    "id"=>$_SESSION["users"]["id"]
                             ]);
                             $kayitlar=$query->fetchAll();
 
@@ -153,7 +153,7 @@ INNER JOIN terms ON Internship_date.donem_id=terms.id WHERE users.id =:id");
                             </td>
                             <td><?= $kayit["create_tarih"]; ?></td>
                             <td>
-                                <a class="btn btn-info" href="<?php echo "pdf/index.php?id=".$_SESSION["kullanici"]["id"] ?>" >Dosyayı İndir</a>
+                                <a class="btn btn-info" href="<?php echo "pdf/index.php?id=".$_SESSION["users"]["id"] ?>" >Dosyayı İndir</a>
                                 <a class="btn btn-danger" href="<?php echo "../ajax/Internship_Registration_sil.php?id=".$kayit["id"]?>" >Sil</a>
                             </td>
                         </tr>

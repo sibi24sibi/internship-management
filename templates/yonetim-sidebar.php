@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../yönetim/index.php" class="brand-link">
-        <img src="../dist/img/comu_logo_4.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+    <a href="../Management/index.php" class="brand-link">
+        <img src="../dist/img/the-entrepreneurship-network-cover.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: 1">
         <span class="brand-text font-weight-light">Internship Tracking</span>
     </a>
@@ -15,7 +15,7 @@
             </div>
             <div class="info">
                 <?php
-                    $ad_soyad = $_SESSION["kullanici"]["ad"]." ".$_SESSION["kullanici"]["soyad"];
+                    $ad_soyad = $_SESSION["users"]["ad"]." ".$_SESSION["users"]["soyad"];
                 ?>
                 <a href="#" class="d-block"><?php echo $ad_soyad; ?></a>
             </div>
@@ -29,7 +29,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                    with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="../yönetim/ogrenci-islem.php" class="nav-link">
+                    <a href="../Management/ogrenci-islem.php" class="nav-link">
                         <i class="fa-solid fa-graduation-cap"></i>
                         <p>
                             Student Transaction
@@ -62,7 +62,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="../yönetim/personel-islem.php" class="nav-link">
+                    <a href="../Management/personel-islem.php" class="nav-link">
                         <i class="fa-solid fa-user-tie"></i>
                         <p>
                            Staff
@@ -71,7 +71,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="../yönetim/bolum-islem.php" class="nav-link">
+                    <a href="../Management/bolum-islem.php" class="nav-link">
                         <i class="fa-solid fa-book"></i>
                         <p>
                         Sections
@@ -80,7 +80,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="../yönetim/staj-tarih-islem.php" class="nav-link">
+                    <a href="../Management/staj-tarih-islem.php" class="nav-link">
                         <i class="fa-solid fa-clock"></i>
                         <p>
                             Internship dates
@@ -91,7 +91,7 @@
 
 
                 <li class="nav-item">
-                    <a href="../yönetim/staj-islem.php" class="nav-link">
+                    <a href="../Management/staj-islem.php" class="nav-link">
                         <i class="fa-solid fa-pen-to-square"></i>
                         <p>
                             Internship Procedures
@@ -100,13 +100,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="../yönetim/staj-islem.php" class="nav-link">
+                            <a href="../Management/staj-islem.php" class="nav-link">
                                 <i class="fa-solid fa-check"></i>
                                 <p>Confirm Internship</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="../yönetim/staj-goruntule.php" class="nav-link">
+                            <a href="../Management/View_internship.php" class="nav-link">
                                 <i class="fa-solid fa-list"></i>
                                 <p>View Internships </p>
                             </a>

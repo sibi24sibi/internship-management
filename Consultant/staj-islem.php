@@ -1,7 +1,7 @@
 <?php
 session_start();
 require "../config.php";
-if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "danışman"){ ?>
+if ($_SESSION["login"] && $_SESSION["users"]["role_ad"] == "danışman"){ ?>
 
 
     <!DOCTYPE html>
@@ -63,7 +63,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "danışman"){ ?>
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Çıkış Yap</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Log Out</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -89,7 +89,7 @@ if ($_SESSION["login"] && $_SESSION["kullanici"]["role_ad"] == "danışman"){ ?>
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Staj Onay İşlemi</h1>
+                            <h1 class="m-0">Internship Approval Process</h1>
                         </div><!-- /.col -->
 <!--                        <div class="col-sm-6">-->
 <!--                            <ol class="breadcrumb float-sm-right">-->
@@ -138,7 +138,7 @@ INNER JOIN student_details ON internship_registration.ogrenci_id=student_details
 INNER JOIN users ON internship_registration.ogrenci_id=users.id
 WHERE student_details.danisman_id_fk=:danisman_id AND internship_registration.danisman_onay=0");
                                             $query->execute([
-                                                    "danisman_id"=>$_SESSION["kullanici"]["id"]
+                                                    "danisman_id"=>$_SESSION["users"]["id"]
                                             ]);
                                             $Staff = $query->fetchAll(PDO::FETCH_ASSOC);
                                             //print_r($Staff);

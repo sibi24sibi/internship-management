@@ -12,7 +12,7 @@
     <script src="https://kit.fontawesome.com/75e0b79c22.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="dist/css/main.css">
 
-    <title>ÇÖMÜ Staj Yönetim Sistemi</title>
+    <title>Internship Management System</title>
 
 
 </head>
@@ -21,21 +21,21 @@
     <div class="container mt-3">
         <div class="header d-flex flex-row justify-content-between align-items-center ">
             <a href="index.html" class="header_logo d-inline-flex text-decoration-none align-items-center text-white">
-                <img src="dist/img/comu_logo_4.png" alt="" width="110" height="110" />
+                <img src="dist/img/the-entrepreneurship-network-cover.jpg" alt="" width="110" height="110" />
                 <div class="ms-2">
                     <h1 class="text-uppercase fw-bold fs-6">
                         TEN Network
                     </h1>
-                    <span class="text-capitalize">Staj Takip Sistemi</span>
+                    <span class="text-capitalize">Internship Tracking System</span>
                 </div>
             </a>
             <nav class="menu">
                 <ul class="d-flex list-unstyled">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white">Şifremi Unuttum?</a>
+                        <a href="#" class="nav-link text-white">I Forgot My Password?</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white">Yardım </a>
+                        <a href="#" class="nav-link text-white">Help </a>
                     </li>
                 </ul>
             </nav>
@@ -51,15 +51,15 @@
                         <?php
                         require ("config.php");
 
-                        if (isset($_POST["email"]) || isset($_POST["sifre"]) ){
+                        if (isset($_POST["email"]) || isset($_POST["Password"]) ){
 
                             $email= $_POST["email"];
-                            $sifre= md5($_POST["sifre"]);
+                            $Password= md5($_POST["Password"]);
 
-                            $query = $db->prepare("SELECT users.id,ad,soyad,email,role_ad FROM users INNER JOIN roles ON users.rol_id = roles.id WHERE email=:kemail AND sifreHash=:ksifreHash");
+                            $query = $db->prepare("SELECT users.id,ad,soyad,email,role_ad FROM users INNER JOIN roles ON users.rol_id = roles.id WHERE email=:kemail AND PasswordHash=:kPasswordHash");
                             $query->execute([
                                     "kemail" =>$email,
-                                    "ksifreHash" =>$sifre
+                                    "kPasswordHash" =>$Password
                             ]);
                             $data = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -71,16 +71,16 @@
                                 header("Location:index.php");
                             }else{
                                 session_start();
-                                $_SESSION["kullanici"] = $data;
+                                $_SESSION["users"] = $data;
                                 $_SESSION["login"] = true;
 
                                 // Giriş Başarılı ise;
                                 switch ($data["role_ad"]){
-                                    case "müdür":
-                                        header("Location:yönetim/index.php");
+                                    case "manager":
+                                        header("Location:Management/index.php");
                                         break;
                                     case "danışman":
-                                        header("Location:danisman/index.php");
+                                        header("Location:Consultant/index.php");
                                         break;
                                     case "personel":
                                         header("Location:personel/index.php");
@@ -103,19 +103,19 @@
                         ?>
                         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                             <div class="mb-3 d-flex justify-content-center">
-                                <img src="dist/img/comu_logo_4.png" alt="" class="" width="125" height="125">
+                                <img src="dist/img/the-entrepreneurship-network-cover.jpg" alt="" class="" width="125" height="125">
                             </div>
                             <div class="mb-3">
-                                <label for="mail" class="form-label">Email adresiniz:</label>
+                                <label for="mail" class="form-label">Email Address:</label>
                                 <input type="text" class="form-control" id="mail" name="email" required
                                        placeholder="öğrencinumarası@ogr.comu.edu.tr">
                             </div>
                             <div class="mb-3">
-                                <label for="sifre" class="form-label">Şifreniz:</label>
-                                <input type="password" class="form-control" id="sifre" name="sifre" required
-                                       placeholder="Şifre Giriniz">
+                                <label for="Password" class="form-label">Password:</label>
+                                <input type="password" class="form-control" id="Password" name="Password" required
+                                       placeholder="Enter Password">
                             </div>
-                            <button type="submit"  class="btn btn-primary">Giriş Yap</button>
+                            <button type="submit"  class="btn btn-primary">Submit</button>
                         </form>
 
                     </div>
@@ -127,7 +127,7 @@
     <div class="container">
 
         <div class="my-5">
-            <h1 class="fs-3 header-color fw-bold">ÇOMÜ Staj Takip Yönetim Sistemi Nedir ? </h1>
+            <h1 class="fs-3 header-color fw-bold">Internship Tracking Management System ? </h1>
             <div class="card w-75">
                 <p>
                     ÇOMÜ akademisyenlerine ve personeline sunulan ubys, eduroam, kütüphane ve dosya paylaşım sistemi
